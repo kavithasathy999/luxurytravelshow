@@ -17,6 +17,9 @@ app.use(cors({
     "http://127.0.0.1:3001",
     "http://localhost:3000",
     "http://localhost:3001",
+    "https://luxurytravelshow.in",
+    "https://www.luxurytravelshow.in",
+    "https://api.luxurytravelshow.in",
     "https://luxurytravelshow.saitechnosolutions.com",
     "https://luxurydashboard.saitechnosolutions.com"
   ],
@@ -436,9 +439,15 @@ app.post("/api/register", async(req, res) => {
       }
     );
     if (!verifyRes.data.success) {
-      return res.status(400).json({ error: "Captcha verification failed" });
+      const captchaErrorCodes = verifyRes.data["error-codes"] || [];
+      console.log("CAPTCHA VERIFY FAILED:", captchaErrorCodes);
+      return res.status(400).json({
+        error: "Captcha verification failed",
+        captchaErrors: captchaErrorCodes,
+      });
     }
   } catch (err) {
+    console.log("CAPTCHA VERIFY ERROR:", err.message);
     return res.status(500).json({ error: "Captcha verification error" });
   }
   const mobileCheckSql = `SELECT * FROM registrations WHERE mobile = ?`;

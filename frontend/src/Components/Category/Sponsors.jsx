@@ -105,27 +105,9 @@ function Sponsors() {
         </section>
       )}
 
-      {ourSponsors.length > 0 && (
+      {associateSponsors.length > 0 && (
         <section className="mb-5">
           <h2 className="text-center mb-2 oursponsors">Event Co-Sponsors</h2>
-          <div className="mobile-slider-container">
-            <Swiper {...sliderSettings}>
-              {ourSponsors.map(sp => (
-                <SwiperSlide key={sp.id}>
-                  <img src={sp.imageUrl} className="sp-img-mobile" alt="Sponsor" crossOrigin="anonymous" />
-                </SwiperSlide>
-              ))}
-            </Swiper>
-          </div>
-          <div className="sp-grid our-gap">
-            {ourSponsors.map(sp => <img key={sp.id} src={sp.imageUrl} className="sp-img" alt="Sponsor" crossOrigin="anonymous" />)}
-          </div>
-        </section>
-      )}
-
-      {associateSponsors.length > 0 && (
-        <section style={{marginBottom: "50px"}}>
-          <h2 className="text-center mb-2">Supported By</h2>
           <div className="mobile-slider-container">
             <Swiper {...sliderSettings}>
               {associateSponsors.map(sp => (
@@ -135,9 +117,27 @@ function Sponsors() {
               ))}
             </Swiper>
           </div>
+          <div className="sp-grid our-gap">
+            {associateSponsors.map(sp => <img key={sp.id} src={sp.imageUrl} className="sp-img" alt="Sponsor" crossOrigin="anonymous" />)}
+          </div>
+        </section>
+      )}
+
+      {ourSponsors.length > 0 && (
+        <section style={{marginBottom: "50px"}}>
+          <h2 className="text-center mb-2">Supported By</h2>
+          <div className="mobile-slider-container">
+            <Swiper {...sliderSettings}>
+              {ourSponsors.map(sp => (
+                <SwiperSlide key={sp.id}>
+                  <img src={sp.imageUrl} className="sp-img-mobile" alt="Sponsor" crossOrigin="anonymous" />
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </div>
 
           <div className="sp-grid">
-            {associateSponsors.map(sp => <img key={sp.id} src={sp.imageUrl} className="sp-img" alt="Sponsor" crossOrigin="anonymous" />)}
+            {ourSponsors.map(sp => <img key={sp.id} src={sp.imageUrl} className="sp-img" alt="Sponsor" crossOrigin="anonymous" />)}
           </div>
         </section>
       )}

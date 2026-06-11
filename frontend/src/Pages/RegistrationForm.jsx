@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import HeaderFour from "../Components/Header/HeaderFour";
@@ -21,6 +21,7 @@ function RegistrationForm() {
   const [zones, setZones] = useState([]);
   const [selectedZone, setSelectedZone] = useState("");
   const [selectedStall, setSelectedStall] = useState("");
+  const captchaRef = useRef(null);
   const [errors, setErrors] = useState({ exhibitorCompanyName: "", contactPersonName: "" });
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [selectedState, setSelectedState] = useState(null);
@@ -220,6 +221,8 @@ function RegistrationForm() {
       console.log("FULL ERROR:", err);
       console.log("ERROR RESPONSE:", err.response?.data);
       const errorMsg = err.response?.data?.error;
+      captchaRef.current?.reset();
+      setCaptchaValue(null);
       if (errorMsg === "Stall already booked") {
         toast.error("This stall is already booked. Please select another.");
       } else if (errorMsg === "Captcha is required") {
@@ -784,8 +787,11 @@ function RegistrationForm() {
                           </label>
                           <div className="d-flex justify-content-start">
                             <ReCAPTCHA
+                              ref={captchaRef}
                               sitekey={process.env.REACT_APP_RECAPTCHA_SITE_KEY}
                               onChange={(value) => setCaptchaValue(value)}
+                              onExpired={() => setCaptchaValue(null)}
+                              onErrored={() => setCaptchaValue(null)}
                               size="normal" 
                             />
                           </div>
