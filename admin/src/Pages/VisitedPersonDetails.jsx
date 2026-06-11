@@ -27,7 +27,6 @@ function VisitedPersonDetails() {
       </div>
       <div className="card border-0 shadow-sm">
         <div className="table-responsive">
-          {/* Added 'table-bordered' for the grid lines */}
           <table className="table table-bordered align-middle mb-0">
             <tbody>
               <tr>

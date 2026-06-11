@@ -13,32 +13,24 @@ function AdminRegister() {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
-  // Handle input changes
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
       const res = await fetch(`${process.env.REACT_APP_API_BASE_URL}/api/admin-register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
-
       const data = await res.json();
-
       if (res.ok) {
-        // Show success toast
         toast.success("Registration successful!", {
           position: "top-center",
           autoClose: 2000,
         });
-
-        // Navigate to AdminLogin ("/") after 2 seconds
         setTimeout(() => navigate("/"), 2000);
       } else {
         toast.error(data.message || "Registration failed", {
@@ -58,7 +50,6 @@ function AdminRegister() {
   return (
     <div className="admin-login-bg d-flex justify-content-center align-items-center">
       <div className="login-card shadow-lg">
-        {/* Toast container */}
         <ToastContainer />
 
         <div className="text-center mb-3">
@@ -69,7 +60,6 @@ function AdminRegister() {
         </div>
 
         <form onSubmit={handleSubmit}>
-          {/* Email */}
           <div className="form-group mb-3">
             <label className="form-label custom-label">Email:</label>
             <input
@@ -82,8 +72,6 @@ function AdminRegister() {
               required
             />
           </div>
-
-          {/* Username */}
           <div className="form-group mb-3">
             <label className="form-label custom-label">Username:</label>
             <input
@@ -96,8 +84,6 @@ function AdminRegister() {
               required
             />
           </div>
-
-          {/* Password */}
           <div className="form-group mb-3">
             <label className="form-label custom-label">Password:</label>
             <div className="password-wrapper">
@@ -121,7 +107,6 @@ function AdminRegister() {
 
           <button type="submit" className="login-btn w-100">Register</button>
         </form>
-
         <div className="text-center mt-3">
           <span>Already have an account? </span>
           <Link to="/">Login</Link>

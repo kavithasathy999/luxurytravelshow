@@ -15,7 +15,6 @@ function BannerAdmin() {
   const [isEditing, setIsEditing] = useState(false);
   const navigate = useNavigate();
 
-  // Fetch existing banner
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_BASE_URL}/api/banner`)
       .then((res) => res.json())

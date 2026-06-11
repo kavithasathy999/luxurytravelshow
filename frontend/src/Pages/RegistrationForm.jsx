@@ -236,7 +236,6 @@ function RegistrationForm() {
     .finally(() => setLoadingAction(false));
   };
 
-  // FETCH MAP + ZONES
   useEffect(() => {
     axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/map`)
       .then((res) => setMapUrl(res.data.mapImageUrl))
@@ -329,7 +328,6 @@ function RegistrationForm() {
                     </div>
                 </div>
 
-                {/* FORM SIDE */}
                 <div className="col-lg-6 col-md-12 mb-4" style={{ fontFamily: "Montserrat, sans-serif" }}>
                   <div className="bg-white rounded-4 p-4 p-md-5 shadow-lg border" style={{ borderRadius: "5px" }}>
                     <h3 className="text-center mb-4 fw-bold" style={{ color: "#512e8e" }}>

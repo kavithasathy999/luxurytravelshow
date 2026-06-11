@@ -68,7 +68,6 @@ const storage = multer.diskStorage({
   }
 });
 
-// storage for the brochure folder
 const brochureDir = path.join(__dirname, "uploads", "brochure");
 if (!fs.existsSync(brochureDir)) {
     fs.mkdirSync(brochureDir, { recursive: true });
@@ -84,7 +83,6 @@ const voucherStorage = multer.diskStorage({
 });
 const uploadVoucher = multer({ storage: voucherStorage, limits: { fileSize: 50 * 1024 * 1024 } });
 
-//visitor card storage
 const visitorStorage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "uploads/visitors"); 
@@ -94,10 +92,8 @@ const visitorStorage = multer.diskStorage({
   }
 });
 
-// Main upload
 const upload = multer({ storage: storage });
 
-//visitor card upload
 const visitorUpload = multer({
   storage: visitorStorage,
   fileFilter: function (req, file, cb) {
@@ -112,7 +108,6 @@ const visitorUpload = multer({
   }
 });
 
-// UPDATE PROFILE PHOTO (store path only)
 app.post("/api/upload-profile", upload.single("photo"), (req, res) => {
   try {
     const adminId = req.body.admin_id;
@@ -148,7 +143,6 @@ app.post("/api/upload-profile", upload.single("photo"), (req, res) => {
   }
 });
 
-//login credentials
 app.post("/api/login", (req, res) => {
   const { email, password } = req.body;
   const ADMIN_EMAIL = "lts@gmail.com";
@@ -175,7 +169,6 @@ app.post("/api/login", (req, res) => {
   }
 });
 
-// upload voucher
 app.post('/api/upload-voucher', uploadVoucher.single('voucher'), (req, res) => {
   if (!req.file) return res.status(400).json({ message: 'No file uploaded.' });
   const protocol = req.protocol;
@@ -195,29 +188,24 @@ app.get('/api/voucher-link', (req, res) => {
     }
 });
 
-// Sponsor images
 const sponsorStorage = multer.diskStorage({
   destination: (req, file, cb) => cb(null, "uploads/sponsors/"),
   filename: (req, file, cb) => cb(null, Date.now() + "-" + file.originalname)
 });
 const sponsorUpload = multer({ storage: sponsorStorage });
 
-// Videos
 const videoStorage = multer.diskStorage({
   destination: (req, file, cb) => cb(null, "uploads/videos/"),
   filename: (req, file, cb) => cb(null, Date.now() + path.extname(file.originalname))
 });
 const videoUpload = multer({ storage: videoStorage });
 
-// Maps
 const mapStorage = multer.diskStorage({
   destination: (req, file, cb) => cb(null, "uploads/maps/"),
   filename: (req, file, cb) => cb(null, Date.now() + path.extname(file.originalname))
 });
 const mapUpload = multer({ storage: mapStorage });
 
-
-// GET BANNER API (Fetch slides and event info)
 app.get("/api/banner", (req, res) => {
   db.query("SELECT * FROM slides", (err, slidesResult) => {
     if (err) return res.status(500).json(err);
@@ -231,7 +219,6 @@ app.get("/api/banner", (req, res) => {
   });
 });
 
-// POST BANNER (Update text info and Add new slides)
 app.post("/api/banner", upload.array('slides'), (req, res) => {
   const { title, location, date, time } = req.body;
   const updateEventSql = "UPDATE event_info SET title=?, location=?, date=?, time=? WHERE id=1";
@@ -252,7 +239,6 @@ app.post("/api/banner", upload.array('slides'), (req, res) => {
   });
 });
 
-// DELETE BANNER IMAGE
 app.delete("/api/banner/:id", (req, res) => {
   const id = req.params.id;
   db.query("SELECT image FROM slides WHERE id=?", [id], (err, result) => {
@@ -274,7 +260,6 @@ app.delete("/api/banner/:id", (req, res) => {
   });
 });
 
-// VIDEO API
 app.get("/api/video", (req, res) => {
   db.query("SELECT * FROM aboutpage_video LIMIT 1", (err, result) => {
     if (err) return res.status(500).json(err);
@@ -316,8 +301,6 @@ app.delete("/api/video", (req, res) => {
   });
 });
 
-
-// MAP API
 app.get("/api/map", (req, res) => {
   db.query("SELECT * FROM registerform_map LIMIT 1", (err, result) => {
     if (err) return res.status(500).json(err);
@@ -356,8 +339,6 @@ app.delete("/api/map", (req, res) => {
   });
 });
 
-
-// Get all sponsors
 app.get("/api/sponsors/:type", (req, res) => {
   const { type } = req.params;
   db.query(
@@ -375,7 +356,6 @@ app.get("/api/sponsors/:type", (req, res) => {
   );
 });
 
-// Upload one or multiple sponsors
 app.post("/api/sponsors", sponsorUpload.array("images", 10), (req, res) => {
   const { type } = req.body; 
   if (!req.files || req.files.length === 0)
@@ -391,7 +371,6 @@ app.post("/api/sponsors", sponsorUpload.array("images", 10), (req, res) => {
   );
 });
 
-// Delete sponsor image by ID
 app.delete("/api/sponsors/:id", (req, res) => {
   const { id } = req.params;
   db.query("DELETE FROM sponsor_images WHERE id=?", [id], (err, result) => {
@@ -400,8 +379,6 @@ app.delete("/api/sponsors/:id", (req, res) => {
   });
 });
 
-
-// GET ALL REGISTRATIONS (ADMIN)
 app.get("/api/registrations", (req, res) => {
   const sql = `
     SELECT r.*, 
@@ -421,7 +398,6 @@ app.get("/api/registrations", (req, res) => {
   });
 });
 
-// Saving registration form
 app.post("/api/register", async(req, res) => {
   const { name, company, mobile, email, gst,  numberOfExhibitors, country, state, city, captcha, zone, stall, stallPrice, pincode, address1, address2 } = req.body;
   if (!captcha) {
@@ -771,7 +747,6 @@ app.post("/api/register", async(req, res) => {
   });
 });
 
-// GET ALL ZONES + STALLS (PUBLIC FOR EXHIBITORS)
 app.get("/api/zones", (req, res) => {
   db.query("SELECT * FROM zones", (err, zones) => {
     if (err) return res.status(500).send(err);
@@ -802,7 +777,6 @@ app.get("/api/zones", (req, res) => {
   });
 });
 
-//  ADMIN — GET ALL ZONES + STALLS
 app.get("/admin/sections", (req, res) => {
   const sqlZones = "SELECT * FROM zones ORDER BY name ASC";
   const sqlStalls = "SELECT * FROM stalls ORDER BY stall_no ASC";
@@ -819,7 +793,6 @@ app.get("/admin/sections", (req, res) => {
   });
 });
 
-//  ADMIN — ADD ZONE
 app.post("/admin/add-section", (req, res) => {
   const { name } = req.body;
   const sql = "INSERT INTO zones (name) VALUES (?)";
@@ -829,7 +802,6 @@ app.post("/admin/add-section", (req, res) => {
   });
 });
 
-//  ADMIN — DELETE ZONE
 app.delete("/admin/delete-section/:id", (req, res) => {
   const { id } = req.params;
   const sql = "DELETE FROM zones WHERE id = ?";
@@ -839,7 +811,6 @@ app.delete("/admin/delete-section/:id", (req, res) => {
   });
 });
 
-//  ADMIN — ADD STALL
 app.post("/admin/add-stall", (req, res) => {
   const { sectionId, stall_no } = req.body;
   const sql = "INSERT INTO stalls (stall_no, zone_id) VALUES (?, ?)";
@@ -849,7 +820,6 @@ app.post("/admin/add-stall", (req, res) => {
   });
 });
 
-//  ADMIN — DELETE STALL
 app.delete("/admin/delete-stall/:id", (req, res) => {
   const { id } = req.params;
   const sql = "DELETE FROM stalls WHERE id = ?";
@@ -859,7 +829,6 @@ app.delete("/admin/delete-stall/:id", (req, res) => {
   });
 });
 
-// Update Stall's Price
 app.put("/api/update-stall-price/:id", (req, res) => {
   const { id } = req.params;
   const { price } = req.body;
@@ -873,7 +842,6 @@ app.put("/api/update-stall-price/:id", (req, res) => {
   });
 });
 
-// ADMIN DASHBOARD STATS
 app.get("/api/dashboard-stats", (req, res) => {
   const stats = {};
   db.query("SELECT COUNT(*) AS total FROM registrations", (err, result) => {
@@ -920,7 +888,6 @@ app.get("/api/dashboard-stats", (req, res) => {
   });
 });
 
-// CONFIRM REGISTRATION (RegistrationList.jsx)
 app.put("/api/confirm/:id", (req, res) => {
   const { id } = req.params;
   const { exhibitors = [] } = req.body;
@@ -1018,7 +985,6 @@ app.put("/api/confirm/:id", (req, res) => {
           db.query("SELECT setting_value FROM exhibitor_settings WHERE setting_key = 'event_title'", async (errS, sRes) => {
             const currentEventTitle = sRes[0]?.setting_value || "Our Event";
             try {
-              // USER MAIL
               await transporter.sendMail({
                 from: process.env.EMAIL_USER,
                 to: user.email,
@@ -1154,7 +1120,6 @@ app.put("/api/confirm/:id", (req, res) => {
   });
 });
 
-// add exhibitors only
 app.post("/api/exhibitors/add/:id", (req, res) => {
   const { id } = req.params;
   const { exhibitors } = req.body;
@@ -1202,7 +1167,6 @@ app.post("/api/exhibitors/add/:id", (req, res) => {
   );
 });
 
-// get additional exhibitors
 app.get("/api/exhibitors/:id", (req, res) => {
   const { id } = req.params;
   db.query(
@@ -1218,7 +1182,6 @@ app.get("/api/exhibitors/:id", (req, res) => {
   );
 });
 
-//updating or editing exhibitors
 app.put("/api/exhibitors/update/:id", (req, res) => {
   const { id } = req.params;
   const { exhibitors } = req.body;
@@ -1254,7 +1217,6 @@ app.put("/api/exhibitors/update/:id", (req, res) => {
   );
 });
 
-// generate QR if registration confirmed
 app.get("/api/generate-qr/:id", (req, res) => {
   const { id } = req.params;
   const sql = `
@@ -1302,7 +1264,6 @@ app.get("/api/generate-qr/:id", (req, res) => {
   });
 });
 
-// reject route (RegistrationList.jsx)
 app.put("/api/reject/:id", (req, res) => {
   const { id } = req.params;
   const { reason } = req.body;
@@ -1323,7 +1284,6 @@ app.put("/api/reject/:id", (req, res) => {
       db.query("SELECT setting_value FROM exhibitor_settings WHERE setting_key = 'event_title'", async (errS, sRes) => {
         const currentEventTitle = sRes && sRes[0] ? sRes[0].setting_value : "Luxury Travel Expo";
         try {
-          // USER MAIL
           await transporter.sendMail({
             from: process.env.EMAIL_USER,
             to: user.email,
@@ -1383,7 +1343,6 @@ app.put("/api/reject/:id", (req, res) => {
               </div>
             `
           });
-          // ADMIN MAIL
           await transporter.sendMail({
             from: process.env.EMAIL_USER,
             to: process.env.ADMIN_EMAIL,
@@ -1432,7 +1391,6 @@ app.put("/api/reject/:id", (req, res) => {
   });
 });
 
-// waiting list route
 app.put("/api/waiting-list/:id", (req, res) => {
   const { id } = req.params;
   const sql = "UPDATE registrations SET status='Waiting', waiting_list=1 WHERE id=?";
@@ -1442,7 +1400,6 @@ app.put("/api/waiting-list/:id", (req, res) => {
   });
 });
 
-// DELETE REGISTRATION
 app.delete("/api/delete-registration/:id", (req, res) => {
   const { id } = req.params;
   const sql = "DELETE FROM registrations WHERE id=?";
@@ -1452,7 +1409,6 @@ app.delete("/api/delete-registration/:id", (req, res) => {
   });
 });
 
-// SAVE NOTES
 app.put("/api/save-notes/:id", (req, res) => {
   const { id } = req.params;
   const { notes } = req.body;
@@ -1463,7 +1419,6 @@ app.put("/api/save-notes/:id", (req, res) => {
   });
 });
 
-/* StallManagement.jsx(get stalls with company + zone) */
 app.get("/admin/stall-data", (req, res) => {
   const sql = `
     SELECT 
@@ -1485,7 +1440,6 @@ app.get("/admin/stall-data", (req, res) => {
   });
 });
 
-/* Update Stall Status */
 app.put("/admin/update-stall-status/:id", (req, res) => {
   const { status } = req.body;
   db.query(
@@ -1498,8 +1452,6 @@ app.put("/admin/update-stall-status/:id", (req, res) => {
   );
 });
 
-
-// release route (StallManagement)
 app.put("/admin/release-stall/:id", (req, res) => {
   const stallId = req.params.id;
   const sql = "UPDATE stalls SET status = 'Available' WHERE id = ?";
@@ -1509,7 +1461,6 @@ app.put("/admin/release-stall/:id", (req, res) => {
   });
 });
 
-// update stall size
 app.put("/admin/update-stall-size/:id", (req, res) => {
   const { size } = req.body;
   const { id } = req.params;
@@ -1526,7 +1477,6 @@ app.put("/admin/update-stall-size/:id", (req, res) => {
   });
 });
 
-// DestinationsPage API(Get Paragraph)
 app.put("/api/destination-text", (req, res) => {
   const { paragraph } = req.body;
   if (!paragraph) {
@@ -1542,7 +1492,6 @@ app.put("/api/destination-text", (req, res) => {
   });
 });
 
-// Getting Paragraph
 app.get("/api/destination-text", (req, res) => {
   db.query(
     "SELECT paragraph FROM destination_text WHERE id = 1",
@@ -1559,7 +1508,6 @@ app.get("/api/destination-text", (req, res) => {
   );
 });
 
-// Update Paragraph
 app.put("/api/destination-text", (req, res) => {
   const { paragraph } = req.body;
   if (!paragraph) {
@@ -1575,8 +1523,6 @@ app.put("/api/destination-text", (req, res) => {
   });
 });
 
-
-// Upload Route
 app.post("/api/destinations", upload.single("image"), (req, res) => {
   const { title, description } = req.body;
   const image = req.file.filename;
@@ -1590,7 +1536,6 @@ app.post("/api/destinations", upload.single("image"), (req, res) => {
   );
 });
 
-// Get all destinations
 app.get("/api/destinations", (req, res) => {
   db.query("SELECT * FROM destinations", (err, results) => {
     if (err) return res.status(500).json(err);
@@ -1598,8 +1543,6 @@ app.get("/api/destinations", (req, res) => {
   });
 });
 
-
-//Upload multiple images in Destinations page
 app.post(
   "/api/destination-images",
   upload.array("images", 10),
@@ -1627,7 +1570,6 @@ app.post(
   }
 );
 
-// getting route to fetch all images
 app.get("/api/destination-images", (req, res) => {
   db.query("SELECT * FROM destination_images", (err, rows) => {
     if (err) return res.status(500).json(err);
@@ -1640,7 +1582,6 @@ app.get("/api/destination-images", (req, res) => {
   });
 });
 
-//Update image description
 app.put("/api/destination-images/:id", (req, res) => {
   const { id } = req.params;
   const { description } = req.body;
@@ -1654,7 +1595,6 @@ app.put("/api/destination-images/:id", (req, res) => {
   );
 });
 
-//deleting uploaded image if not needed
 app.delete("/api/destination-images/:id", (req, res) => {
   const { id } = req.params;
   db.query(
@@ -1675,7 +1615,6 @@ app.delete("/api/destination-images/:id", (req, res) => {
   );
 });
 
-// GET LIST OF IMAGES FROM uploads FOLDER 
 app.get("/api/uploads/list", (req, res) => {
   const uploadPath = path.join(__dirname, "uploads");
   fs.readdir(uploadPath, (err, files) => {
@@ -1688,7 +1627,6 @@ app.get("/api/uploads/list", (req, res) => {
   });
 });
 
-// UPLOAD IMAGE TO DATABASE(Curated Destinations.jsx)
 app.post("/api/curated/upload", upload.array("images", 20), (req, res) => {
   const { title, category } = req.body;
   const files = req.files;
@@ -1715,7 +1653,6 @@ app.post("/api/curated/upload", upload.array("images", 20), (req, res) => {
   });
 });
 
-// GET CURATED DESTINATIONS 
 app.get("/api/curated/list", (req, res) => {
   db.query("SELECT * FROM curated_destinations", (err, results) => {
     if (err) return res.status(500).json(err);
@@ -1723,7 +1660,6 @@ app.get("/api/curated/list", (req, res) => {
   });
 });
 
-// DELETE a curated destination
 app.delete("/api/curated/:id", (req, res) => {
   const { id } = req.params;
   // Get filename first
@@ -1744,7 +1680,6 @@ app.delete("/api/curated/:id", (req, res) => {
   });
 });
 
-// UPDATE curated destination (title + category)
 app.put("/api/curated/update/:id", (req, res) => {
   const { id } = req.params;
   const { title, category } = req.body;
@@ -1764,8 +1699,7 @@ app.put("/api/curated/update/:id", (req, res) => {
     res.json({ message: "Updated successfully" });
   });
 });
-
-// NEW API for Admin Table 
+ 
 app.get('/api/contact', (req, res) => {
     const query = "SELECT * FROM contact_enquiries ORDER BY created_at DESC";
     db.query(query, (err, results) => {
@@ -1777,7 +1711,6 @@ app.get('/api/contact', (req, res) => {
     });
 });
 
-// register a new visitor 
 app.post('/api/visitors/register', visitorUpload.single("file"), (req, res) => {
     const { firstName, lastName, companyName, mobileNumber, designation, email, visitorType, country, state, city, pincode, address1, address2 } = req.body;
     const filePath = req.file ? req.file.path : null;
@@ -1804,8 +1737,7 @@ app.post('/api/visitors/register', visitorUpload.single("file"), (req, res) => {
         db.query(sql, [firstName, lastName, email, mobileNumber, companyName, designation, visitorType, country, state, city, pincode, address1, address2, filePath, fileName || null],
             (err, result) => {
             if (err) return res.status(500).json({ error: err.message });      
-            const visitorId = `2026${result.insertId.toString().padStart(12, '0')}`; 
-            // VISITOR EMAIL 
+            const visitorId = `2026${result.insertId.toString().padStart(12, '0')}`;  
             const visitorEmailContent = `
             <div style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; max-width: 600px; margin: auto; border: 1px solid #e0e0e0; border-radius: 16px; overflow: hidden;">
               <div style="background: #593983; padding: 40px 20px; text-align: center; color: white;">
@@ -1912,7 +1844,6 @@ app.post('/api/visitors/register', visitorUpload.single("file"), (req, res) => {
                     &copy; ${new Date().getFullYear()} ${settings.event_title}
                 </div>
             </div>`;
-            // ADMIN EMAIL
             const adminEmailContent = `
             <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; border: 1px solid #eee; border-radius: 12px; overflow: hidden;">
                 <div style="background: #2c3e50; padding: 20px; text-align: center; color: white;">
@@ -2052,7 +1983,6 @@ app.post('/api/visitors/register', visitorUpload.single("file"), (req, res) => {
   });
 });
 
-// fetch all visitors for Admin Table (VisitorRegistrations.jsx)
 app.get('/api/visitors/registrations', (req, res) => {
     db.query("SELECT * FROM visitors ORDER BY id DESC", (err, results) => {
         if (err) return res.status(500).json({ error: err.message });
@@ -2060,7 +1990,6 @@ app.get('/api/visitors/registrations', (req, res) => {
     });
 });
 
-// approve or reject api 
 app.put('/api/visitors/status/:id', (req, res) => {
     const { status, notes } = req.body;
     const visitorId = req.params.id;
@@ -2101,7 +2030,6 @@ app.put('/api/visitors/status/:id', (req, res) => {
                     console.error("QR Processing Error:", qrError);
                 }
             }
-            // EMAIL CONTENT
             const subject = status === "approved"
                 ? "Your Registration is Approved"
                 : "Your Registration is Rejected"; 
@@ -2226,7 +2154,6 @@ app.put('/api/visitors/status/:id', (req, res) => {
     });
 });
 
-// delete api (VisitorRegistrations.jsx)
 app.delete('/api/visitors/:id', (req, res) => {
     const visitorId = req.params.id;
     db.query("DELETE FROM visitors WHERE id = ?", [visitorId], (err) => {
@@ -2235,7 +2162,6 @@ app.delete('/api/visitors/:id', (req, res) => {
     });
 });
 
-// count of total visitors
 app.get("/qr-scanner", (req, res) => {
   res.set({
     "Cache-Control": "no-store, no-cache, must-revalidate, private",
@@ -2640,7 +2566,6 @@ app.get("/qr-scanner", (req, res) => {
           if (decodedText === lastScan && (now - lastScanTime) < 3000) return;
           lastScan = decodedText;
           lastScanTime = now;
-          // Accept BOTH JSON and URL QR
           if (!decodedText.startsWith("{") && !decodedText.startsWith("http")) {
             showError();
             return;
@@ -2743,7 +2668,6 @@ app.get("/api/visitor-stats", (req, res) => {
   });
 });
 
-// approval of visitors using scanner
 app.post("/api/scan-qr", (req, res) => {
   let { qrData } = req.body;
   let visitorId = null;
@@ -2845,7 +2769,6 @@ app.get("/api/scan-qr/:id", (req, res) => {
   });
 });
 
-// list of visitors
 app.get("/api/visitors", (req, res) => {
   db.query(
     "SELECT * FROM visitors WHERE checked_in = 1 ORDER BY id DESC",
@@ -2856,7 +2779,6 @@ app.get("/api/visitors", (req, res) => {
   );
 });
 
-// visitor's details
 app.get("/api/visitor/:id", (req, res) => {
   const id = req.params.id;
   db.query(
@@ -2870,7 +2792,6 @@ app.get("/api/visitor/:id", (req, res) => {
   );
 });
 
-// insert event details of visitors(VisitorEventSettings.jsx)
 app.get('/api/visitor-settings', (req, res) => {
     db.query("SELECT * FROM visitor_settings WHERE id = 1", (err, result) => {
         if (err) return res.status(500).json({ error: err.message });
@@ -2878,7 +2799,6 @@ app.get('/api/visitor-settings', (req, res) => {
     });
 });
 
-// api to update event details of visitors(VisitorEventSettings.jsx)
 app.post('/api/visitor-settings/update', (req, res) => {
     const { event_title, venue, event_time } = req.body;   
     const sql = `
@@ -2895,7 +2815,6 @@ app.post('/api/visitor-settings/update', (req, res) => {
     });
 });
 
-// GET Event Title for Exhibitors page(ExhibitorEventDetails.jsx)
 app.post("/api/settings/event-title", (req, res) => {
   const { title } = req.body;
   if (!title) {
@@ -2915,7 +2834,6 @@ app.post("/api/settings/event-title", (req, res) => {
   });
 });
 
-// SAVE/UPDATE Event Title for Exhibitors page
 app.post("/api/settings/event-title", (req, res) => {
   const { title } = req.body;
   const sql = `

@@ -128,7 +128,6 @@ function RegistrationList() {
       .finally(() => setLoadingAction(""));
   };
 
-  // Confirm
   const handleConfirm = () => {
     if (!validateExhibitors()) {
       toast.error("Please fill all exhibitor details correctly");
@@ -150,7 +149,6 @@ function RegistrationList() {
       .finally(() => setLoadingAction(""));
   };
 
-  // Reject
   const handleReject = () => {
     setLoadingAction("reject");
     axios
@@ -166,7 +164,6 @@ function RegistrationList() {
       .finally(() => setLoadingAction(""));
   };
 
-  // Delete
   const handleDelete = () => {
     setLoadingAction("delete");
     axios
@@ -182,7 +179,6 @@ function RegistrationList() {
       .finally(() => setLoadingAction(""));
   };
 
-  //save
   const handleEditSave = () => {
     if (!validateExhibitors()) {
       toast.error("Please fill all exhibitor details correctly");
@@ -209,7 +205,6 @@ function RegistrationList() {
     setRejectReason("");
   };
 
-  // Filtering
   const filtered = data.filter((item) => {
     const searchText = search.toLowerCase();
     const filterText = filter.toLowerCase();
@@ -430,7 +425,6 @@ function RegistrationList() {
     };
   };
 
-  // CSV Export
   const exportCSV = () => {
     if (filtered.length === 0) {
       toast.error("No data to export");
@@ -467,7 +461,6 @@ function RegistrationList() {
   });
   const csvContent = "\uFEFF" + title + "\n\n" + headers.join(",") + "\n" + rows.join("\n");
   
-  // Download CSV
   const blob = new Blob([csvContent], {
     type: "text/csv;charset=utf-8;"
   });

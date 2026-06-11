@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import HomeFour from './HomeFour';
 import Destinations from "./Destinations";
 import AboutOne from '../Components/About/AboutOne';
-// import ContactOne from "../Components/Contact/ContactOne";
 import ExpoDetails from '../Components/Guide/ExpoDetails';
 import RegistrationForm from './RegistrationForm';
 import ForVisitors from './ForVisitors';
@@ -23,7 +22,6 @@ function RouterPage() {
           <Route path="/expodetails" element={<ExpoDetails />}></Route>
           <Route path="/registrationForm" element={<RegistrationForm />}></Route>
           <Route path="/forvisitors" element={<ForVisitors />}></Route>
-          {/* <Route path="/contactus" element={<ContactOne />} /> */}
           <Route path="/thank-you" element={<ThankYou />} />
         </Routes>
       </Router>

@@ -55,7 +55,6 @@ const VisitorRegistrations = () => {
     return `+${cleanNum}`;
   };
 
-  // filters accordingly
   const filteredVisitors = visitors.filter(v => {
     const nameCompanyMatch = (
       `${v.first_name} ${v.last_name} ${v.company_name}`

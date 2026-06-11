@@ -17,7 +17,6 @@ function Attractions() {
   const curatedContainerRef = useRef(null);
   const fileInputRef = useRef(null);
 
-  // Fetch curated list
   const fetchCurated = () => {
     fetch(`${process.env.REACT_APP_API_BASE_URL}/api/curated/list`)
       .then((res) => res.json())
@@ -68,7 +67,6 @@ function Attractions() {
     processFiles();
   };
 
-  // Upload
   const handleUpload = () => {
     if (!title || !category || images.length === 0) {
       toast.info("Please fill all fields and select images");
@@ -173,7 +171,6 @@ function Attractions() {
         </button>
       </div>
 
-      {/* EDIT FORM */}
       {editData && (
         <div className="card p-4 border-0 shadow-sm mb-4" style={{ borderRadius: "15px", background: "#ffffff", border: "1px solid #e0e0e0" }}>
           <h5 className="fw-bold mb-3" style={{ color: "#593983" }}>Edit Destination Details</h5>
@@ -204,7 +201,6 @@ function Attractions() {
         </div>
       )}
 
-      {/* Upload Form */}
       <div className="card p-4 border-0 shadow-sm mb-5" style={{ borderRadius: "15px" }}>
         <h5 className="fw-bold mb-3">Add New Destination</h5>
         <div className="row">
@@ -260,7 +256,6 @@ function Attractions() {
         </button>
       </div>
 
-      {/* Existing Images */}
       <div className="d-flex justify-content-between align-items-center mb-4">
         <h4 className="fw-bold m-0">Uploaded Gallery</h4>
         <span className="badge bg-white text-dark border px-3 py-2 fw-semibold" style={{ borderRadius: "8px" }}>{curatedList.length} Destinations</span>

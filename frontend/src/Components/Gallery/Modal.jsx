@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 const Modal = ({ isOpen, closeModal, imageSrc }) => {
     const [visible, setVisible] = useState(false);
 
-    // Handle smooth opening
     useEffect(() => {
         if (isOpen) {
             setTimeout(() => setVisible(true), 10);
@@ -12,7 +11,7 @@ const Modal = ({ isOpen, closeModal, imageSrc }) => {
         }
     }, [isOpen]);
 
-    if (!isOpen) return null; // Don't render if it's closed
+    if (!isOpen) return null;
 
     return (
         <div className={`modal-overlay ${visible ? "show" : ""}`} onClick={closeModal}>

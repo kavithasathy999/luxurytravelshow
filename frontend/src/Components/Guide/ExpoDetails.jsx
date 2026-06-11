@@ -32,7 +32,6 @@ function ExpoDetails() {
 
   return (
     <section id="expodetails" ref={sectionRef} className="premium-expo-container">
-      {/* Target tablet width 1024px and below */}
       <style>
         {`
           @media (max-width: 1024px) {
@@ -50,7 +49,6 @@ function ExpoDetails() {
           }
         `}
       </style>
-
       <div className="container py-5">
         <div className="row justify-content-center text-center">
           <div className="col-lg-8">
@@ -60,9 +58,7 @@ function ExpoDetails() {
             </p>
           </div>
         </div>
-
         <div className="row align-items-center g-5">
-          {/* Left Area */}
           <div className="col-lg-6">
             <div className="content-wrapper">
               <h3 className="section-heading">Luxury Travel Show Event</h3>
@@ -83,8 +79,6 @@ function ExpoDetails() {
               </div>
             </div>
           </div>
-
-          {/* Right Cards */}
           <div className="col-lg-6">
             <div className="stats-stack">
               <div className="glass-card">
@@ -96,7 +90,6 @@ function ExpoDetails() {
                   <p className="stat-label">Visitors</p>
                 </div>
               </div>
-
               <div className="glass-card highlighted">
                 <div className="stat-icon-box">
                   <FaBuilding color="#593983" aria-label="exhibitors" />

@@ -47,19 +47,19 @@ function FooterThree() {
                                         </p>
                                     </div>
                                     <div className="th-social">
-                                        <Link to="https://www.facebook.com/">
+                                        <Link to="https://www.facebook.com/" target="_blank" rel="noopener noreferrer">
                                             <i className="fab fa-facebook-f" />
                                         </Link>
-                                        <Link to="https://www.twitter.com/">
+                                        <Link to="https://www.twitter.com/" target="_blank" rel="noopener noreferrer">
                                             <i className="fab fa-x" />
                                         </Link>
-                                        <Link to="https://www.linkedin.com/">
+                                        <Link to="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer">
                                             <i className="fab fa-linkedin-in" />
                                         </Link>
-                                        <Link to="https://www.youtube.com/">
+                                        <Link to="https://www.youtube.com/" target="_blank" rel="noopener noreferrer">
                                             <i className="fab fa-youtube" />
                                         </Link>
-                                        <Link to="https://www.whatsapp.com/">
+                                        <Link to="https://www.whatsapp.com/" target="_blank" rel="noopener noreferrer">
                                             <i className="fab fa-whatsapp" />
                                         </Link>
                                     </div>
@@ -70,18 +70,7 @@ function FooterThree() {
                             <div className="widget widget_nav_menu footer-widget">
                                 <h3 className="widget_title">Quick Links</h3>
                                 <div className="menu-all-pages-container">
-                                    <ul className="menu">
-                                        {/* <li>
-                                            <a
-                                            href="/#aboutus"
-                                            onClick={(e) => {
-                                                e.preventDefault();
-                                                navigate("/#aboutus");
-                                            }}
-                                            >
-                                            About Expo
-                                            </a>
-                                        </li> */}
+                                    <ul className="menu">                                      
                                         <li>
                                             <a
                                             href="/registrationForm"

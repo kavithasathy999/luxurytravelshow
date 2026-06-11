@@ -10,7 +10,6 @@ function StallsList() {
   const [sizeInput, setSizeInput] = useState("");
   const navigate = useNavigate();
 
-  // FETCH STALL DATA
   const loadStalls = () => {
     axios
       .get(`${process.env.REACT_APP_API_BASE_URL}/admin/stall-data`)
@@ -22,7 +21,6 @@ function StallsList() {
     loadStalls();
   }, []);
 
-  // UPDATE STATUS
   const updateStatus = (id, status) => {
     axios
       .put(`${process.env.REACT_APP_API_BASE_URL}/admin/update-stall-status/${id}`, { status })
@@ -39,7 +37,6 @@ function StallsList() {
     .catch((err) => console.log(err));
   };
 
-  // UPDATE SIZE
   const handleSizeUpdate = async () => {
     try {
       const updatedSize = sizeInput.trim() === "" ? "" : sizeInput;
@@ -55,7 +52,6 @@ function StallsList() {
     }
   };
 
-  // RELEASES STALL AFTER GETS BLOCKED
   const releaseStall = async (stallId) => {
     try {
       await axios.put(`${process.env.REACT_APP_API_BASE_URL}/admin/release-stall/${stallId}`);
@@ -155,7 +151,7 @@ function StallsList() {
           ))}
         </tbody>
       </table>
-      {/* SIZE EDIT MODAL */}
+
       {showSizeModal && (
         <div className="modal d-block" style={{ background: "rgba(0,0,0,0.5)" }}>
           <div className="modal-dialog">

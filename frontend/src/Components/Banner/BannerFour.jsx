@@ -22,7 +22,6 @@ function BannerFour() {
   useEffect(() => {
     if (window.location.hash === "#hero") {
       const heroSection = document.getElementById("hero");
-
       if (heroSection) {
         setTimeout(() => {
           heroSection.scrollIntoView({

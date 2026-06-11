@@ -5,8 +5,6 @@ import BannerFour from '../Components/Banner/BannerFour'
 import WhyParticipate from "../Components/Brand/WhyParticipate";
 import WhoShouldExhibit from '../Components/Guide/WhoShouldExhibit'
 import ExpoDetails from '../Components/Guide/ExpoDetails';
-// import StallInformation from '../Components/Guide/StallInformation';
-// import ContactOne from '../Components/Contact/ContactOne';
 import FooterThree from '../Components/Footer/FooterThree'
 import ScrollToTop from '../Components/ScrollToTop'
 // import AboutOne from '../Components/About/AboutOne'
@@ -18,7 +16,6 @@ function HomeFour() {
     const location = useLocation();
     useEffect(() => {
     if (location.hash) {
-        // Wait for the DOM to render
         setTimeout(() => {
         const el = document.querySelector(location.hash);
         if (el) {
@@ -32,12 +29,10 @@ function HomeFour() {
         <div>
             <HeaderFour />
             <BannerFour />
-            {/* <AboutOne /> */}
             <Sponsors />
             <WhyParticipate />
             <WhoShouldExhibit />
             <ExpoDetails />
-            {/* <StallInformation /> */}
             <FooterThree />
             <ScrollToTop />
             <WhatsappFloat />

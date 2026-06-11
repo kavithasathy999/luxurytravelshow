@@ -15,7 +15,7 @@ function MapUpload() {
       const res = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/map`);
       setMapUrl(res.data.mapImageUrl || '');
       if (res.data.mapImageUrl) {
-        const parts = res.data.mapImageUrl.split(/[/\\]/); // handles both / and \
+        const parts = res.data.mapImageUrl.split(/[/\\]/); 
         setUploadedFileName(parts[parts.length - 1]);
       } else {
         setUploadedFileName('');
@@ -34,21 +34,16 @@ function MapUpload() {
       toast.error("Please select a file first!");
       return;
     }
-
     const formData = new FormData();
     formData.append('map', file);
-
     try {
       await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/map`, formData);
-      // Success Toast
       toast.success("Map uploaded successfully!"); 
-      
       setFile(null);
       fileRef.current.value = "";
       fetchMap();
     } catch (err) {
       console.error(err);
-      // Error Toast
       toast.error("Failed to upload map. Please try again.");
     }
   };
@@ -57,7 +52,6 @@ function MapUpload() {
     try {
       await axios.delete(`${process.env.REACT_APP_API_BASE_URL}/api/map`);
       toast.success("Map removed successfully");
-      
       setMapUrl('');
       setUploadedFileName('');
     } catch (err) {

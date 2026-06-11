@@ -437,7 +437,7 @@ function ForVisitors() {
           </div>
         </div>
       </div>
-      {/* ================= VISITORS REGISTRATION FORM ================= */}
+
       <section className="registration-section py-5">
         <div className="container">
           <div className="row justify-content-center">
@@ -793,7 +793,7 @@ function ForVisitors() {
           </div>
         </div>
       </section>
-      {/* ================= ATTRACTIONS ================= */}
+
       <section className="curated-section py-5">
         <div className="container">
           <div className="mb-4 d-flex justify-content-between align-items-center">

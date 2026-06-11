@@ -111,43 +111,7 @@ function HeaderFour() {
                         >
                           Home
                         </a>
-                      </li>
-                      {/* <li>
-                        <a
-                          href="/#aboutus"
-                          onClick={(e) => handleNavClick(e, "aboutus")}
-                          className={activeSection === "aboutus" ? "active-menu section" : ""}
-                        >
-                          About Us
-                        </a>
-                      </li>
-                      <li>
-                        <a
-                          href="/#why"
-                          onClick={(e) => handleNavClick(e, "why")}
-                          className={activeSection === "why" ? "active-menu section" : ""}
-                        >
-                          Why Participate
-                        </a>
-                      </li>
-                      <li>
-                        <a
-                          href="/#exhibit"
-                          onClick={(e) => handleNavClick(e, "exhibit")}
-                          className={activeSection === "exhibit" ? "active-menu section" : ""}
-                        >
-                          Who Should Exhibit
-                        </a>
-                      </li>
-                      <li>
-                        <a
-                          href="/#expodetails"
-                          onClick={(e) => handleNavClick(e, "expodetails")}
-                          className={activeSection === "expodetails" ? "active-menu section" : ""}
-                        >
-                          Expo Details
-                        </a>
-                      </li> */}
+                      </li>                    
                       <li className="menu-item-has-children">
                         <a 
                           href="#" 
@@ -157,7 +121,6 @@ function HeaderFour() {
                           For Exhibitors 
                           <i className="far fa-chevron-down dropdown-icon"></i>
                         </a>
-
                         <ul className="sub-menu premium-dropdown">
                           <li>
                             <Link to="/registrationForm">
@@ -197,7 +160,6 @@ function HeaderFour() {
                     <i className={isMobileMenuOpen ? "far fa-times" : "far fa-bars"}></i>
                   </button>
                 </div>
-                {/* Hide CTA button on Tablets to save space */}
                 <div className="col-auto d-none d-xl-block">
                   <div className="header-button">
                     <Link to="/registrationForm" className="booknow-btn">Book Now</Link>

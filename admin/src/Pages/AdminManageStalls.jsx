@@ -19,7 +19,6 @@ function AdminManageStalls() {
   const [startNumber, setStartNumber] = useState("");
   const navigate = useNavigate();
 
-  // Load zones
   const loadZones = () => {
     setLoading(true);
     axios.get(`${process.env.REACT_APP_API_BASE_URL}/admin/sections`)
@@ -30,7 +29,6 @@ function AdminManageStalls() {
       .catch(() => setLoading(false));
   };
 
-  // Load confirmed stalls
   const loadBookedStalls = () => {
     axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/registrations`)
       .then(res => {
@@ -56,7 +54,6 @@ function AdminManageStalls() {
     };
   }, []);
 
-  // HANDLE ADD
   const handleSubmit = async () => {
     const count = parseInt(inputValue);
     if (!inputValue || (modalType === "stall" && count <= 0)) {
@@ -101,7 +98,6 @@ function AdminManageStalls() {
     }
   };
 
-  // OPEN DELETE MODAL
   const openDeleteModal = (type, id, isBooked = false) => {
     if (type === "stall" && isBooked) {
       toast.info("Cannot delete booked stall", { position: "top-right" });
@@ -113,7 +109,6 @@ function AdminManageStalls() {
     setShowDeleteModal(true);
   };
 
-  // CONFIRM DELETE
   const handleDeleteConfirm = async () => {
     try {
       if (deleteType === "zone") {
@@ -161,16 +156,15 @@ function AdminManageStalls() {
         
         .zone-card:hover { transform: translateY(-5px); box-shadow: 0 15px 35px rgba(89, 57, 131, 0.1) !important; }
         
-        /* UPDATED: Forced 4-column grid for stalls */
         .stall-grid-container {
           display: grid;
-          grid-template-columns: repeat(4, 1fr); /* FORCES 4 COLUMNS */
+          grid-template-columns: repeat(4, 1fr); 
           gap: 10px;
           padding: 20px;
         }
 
         .stall-item { 
-          font-size: 11px; /* Slightly smaller font to ensure fit */
+          font-size: 11px; 
           font-weight: 600; 
           border-radius: 10px; 
           padding: 6px 4px; 
@@ -191,7 +185,7 @@ function AdminManageStalls() {
         
         .zone-grid { 
           display: grid; 
-          grid-template-columns: repeat(auto-fill, minmax(min(100%, 350px), 1fr)); /* Increased min-width to give room for 4 stalls */
+          grid-template-columns: repeat(auto-fill, minmax(min(100%, 350px), 1fr)); 
           gap: 25px; 
           width: 100%;
         }
@@ -336,7 +330,6 @@ function AdminManageStalls() {
       </div>
       )}
 
-      {/* ADD / EDIT MODAL */}
       {showModal && (
         <div className="modal d-block" style={{ background: "rgba(0,0,0,0.6)", backdropFilter: "blur(4px)" }}>
           <div className="modal-dialog modal-dialog-centered">
@@ -426,8 +419,7 @@ function AdminManageStalls() {
           </div>
         </div>
       )}
-
-      {/* DELETE MODAL */}
+      
       {showDeleteModal && (
         <div className="modal d-block" style={{ background: "rgba(0,0,0,0.6)", backdropFilter: "blur(4px)" }}>
           <div className="modal-dialog modal-dialog-centered">

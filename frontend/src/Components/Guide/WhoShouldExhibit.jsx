@@ -10,11 +10,9 @@ const WhoShouldExhibit = () => {
 
   return (
     <section id="exhibit" className="who-exhibit-section">
-      {/* Background Abstract Layer */}
       <div className="mesh-gradient-bg"></div>
       <div className="container py-5 position-relative" style={{ zIndex: 2 }}>
         <div className="row align-items-center py-5"> 
-          {/* Left Side: Content & Headline */}
           <div className="col-lg-5 mb-5 mb-lg-0">
             <h6 className="eyebrow fw-bold text-uppercase mb-3" style={{color: "#c084fc", letterSpacing: '3px'}}>
               Exhibitor Profiles
@@ -29,7 +27,6 @@ const WhoShouldExhibit = () => {
             </p>
           </div>
 
-          {/* Right Side: Interactive Minimalist List */}
           <div className="col-lg-6 offset-lg-1">
             <div className="category-list">
               {categories.map((category, index) => (

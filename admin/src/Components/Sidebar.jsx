@@ -19,7 +19,6 @@ function Sidebar() {
   const linkStyle = "nav-link text-white d-flex align-items-center px-3 py-3 rounded";
   return (
     <div className="sidebar p-3" style={sidebarStyle}>
-      {/* Logo Section */}
       <Link to="/admin" className="text-decoration-none text-white">
         <div className="d-flex align-items-center gap-3 mb-4 mt-2">
           <img
@@ -33,7 +32,6 @@ function Sidebar() {
         </div>
       </Link>
       <ul className="nav flex-column gap-2 sidebar-row">
-        {/* Dashboard Group */}
         <li className="nav-item">
           <Link to="/admin" className={linkStyle} onClick={() => setSidebarWidth("280px")}>
             <i className="fas fa-chart-line me-3" style={{ width: "24px", fontSize: "1.3rem" }}></i>
